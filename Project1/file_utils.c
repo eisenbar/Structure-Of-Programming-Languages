@@ -1,24 +1,48 @@
 #include <stdio.h>
-#include "file_utils.c
+#include "file_utils.h"
 #include <stdlib.h>
 #include <errno.h>
+#include <string.h>
 
+/**
+ *Reads filename and stores it into buffer
+ *
+ *Help from http://www.cplusplus.com/reference/cstdio/fread/
+ */
 int read_file( char* filename, char **buffer ){
 
-	FILE *input;
+	FILE* input;
 	input = fopen(filename, "r");
-	sizeOfFile = sizeof(buffer);
 
 	if(input){
-		fread(&buffer, sizeof(char), sizeOfFile+1, input);
-
-		fclose(input)
+		fread(&buffer, sizeof(char), sizeof(buffer)+1, input);
+		fclose(input);
+		return 0;
 	}
 	else(){
-
-		return errno
+		fprintf( stderr, "Reading Error");
+		return errno;
 	}
+	return 0;
 }
-int write_file( char* filename, char *buffer, int size){
 
+/**
+ *
+ * Writes buffer into filename
+ *Help from http://www.cplusplus.com/reference/cstdio/fwrite/
+ */ 
+int write_file( char* filename, char *buffer, int size){
+	FILE* output;
+	output = fopen(filename, "w");
+
+	if(output){
+		fwrite(buffer, sizeof(char), size, output);
+		fclose(output);
+		return 0;
+	}
+	else(){
+		fprintf( stderr, "Writing Error");
+		return errno;
+	}
+	return 0;
 }
